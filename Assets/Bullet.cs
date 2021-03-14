@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
         if(collision.CompareTag("Player")){
        
         }
-        if(collision.CompareTag("Piedra") || collision.CompareTag("Claca"))
+        if(collision.CompareTag("Piedra") || collision.CompareTag("Claca") || collision.CompareTag("Enemy1"))
         {
         GameObject effect = Instantiate(explosion,transform.position,Quaternion.identity);
         Destroy(effect,.5f);
