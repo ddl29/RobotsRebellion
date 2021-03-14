@@ -11,7 +11,7 @@ public class Enemy1 : MonoBehaviour
      Vector2 movement;
      Vector3 dir;
      public GameObject bones;
-     public GameObject explosion;
+ 
     // Start is called before the first frame update
     void Start()
     {
@@ -36,8 +36,9 @@ public class Enemy1 : MonoBehaviour
         if (collision.CompareTag("Bala1"))
         {   
             Destroy(gameObject);
-            GameObject effect2 = Instantiate(bones,transform.position,Quaternion.identity);
-            Destroy(effect2,5f);
+            GameObject death = Instantiate(bones,transform.position,Quaternion.identity);
+            Destroy(death,6f);
+           
         }
     }
 }

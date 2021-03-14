@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Piedra
   - Claca
+  - Enemy1
+  - Bala1
   layers:
   - Default
   - TransparentFX
