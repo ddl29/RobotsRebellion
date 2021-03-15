@@ -22,8 +22,9 @@ public class Bullet : MonoBehaviour
         if(collision.CompareTag("Player")){
        
         }
-        if(collision.CompareTag("Piedra") || collision.CompareTag("Claca") || collision.CompareTag("Enemy1"))
-        {
+        if(collision.CompareTag("Piedra") || collision.CompareTag("Claca") || collision.CompareTag("Enemy1")|| collision.CompareTag("Spawn"))
+        { 
+     
         GameObject effect = Instantiate(explosion,transform.position,Quaternion.identity);
         Destroy(effect,.5f);
         Destroy(gameObject);
@@ -31,15 +32,16 @@ public class Bullet : MonoBehaviour
     }
     void OnCollision2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Enemy") )
         {
             
-        }
-        else
-        {
         GameObject effect = Instantiate(explosion,transform.position,Quaternion.identity);
         Destroy(effect,.5f);
         Destroy(gameObject);
+        }
+        else
+        {
+       
         }
     }
  

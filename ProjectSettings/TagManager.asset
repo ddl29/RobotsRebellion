@@ -8,6 +8,9 @@ TagManager:
   - Claca
   - Enemy1
   - Bala1
+  - Life
+  - Score
+  - Spawn
   layers:
   - Default
   - TransparentFX
