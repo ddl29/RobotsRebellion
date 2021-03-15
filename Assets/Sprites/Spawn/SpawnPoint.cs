@@ -34,23 +34,33 @@ public class SpawnPoint : MonoBehaviour
         Vector2 SpawnPos = new Vector2(18.14f,-9.05f);
          Instantiate(enemy1,SpawnPos,Quaternion.identity);
          if(stop){
-           
            CancelInvoke("EnemySpawn");
          }
         
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Bala1"))
-        {   spawnLife -=1;
+        if (collision.CompareTag("Bala1") ){
+            spawnLife -=1;
             if (spawnLife<=0){
-            Destroy(gameObject);
-            GameObject explosion = Instantiate(destroy,transform.position,Quaternion.identity);
-            Destroy(explosion,1.25f);
-            Destroy(gameObject);
+                 Destroy(gameObject);
+                 GameObject explosion = Instantiate(destroy,transform.position,Quaternion.identity);
+                 Destroy(explosion,1.25f);
+                 Destroy(gameObject);
 
-            stop = true;
+                 stop = true;
             }
         }
+          if (collision.CompareTag("Bala2") ){
+            spawnLife -= 12;
+            if (spawnLife<=0){
+                Destroy(gameObject);
+                GameObject explosion = Instantiate(destroy,transform.position,Quaternion.identity);
+                Destroy(explosion,1.25f);
+                Destroy(gameObject);
+
+                stop = true;
+            }
+          }
     }
 }

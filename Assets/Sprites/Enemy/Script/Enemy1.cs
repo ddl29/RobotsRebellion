@@ -31,19 +31,18 @@ public class Enemy1 : MonoBehaviour
     public void Update()
     {
         if(active){
-        if(Vector2.Distance(transform.position,target.position)>=1.5){
-        speed = 4f;
-        movement = (target.transform.position-transform.position).normalized;
-        transform.position = Vector2.MoveTowards(transform.position,target.position,speed * Time.deltaTime);
-        animator.SetFloat("x",movement.x);
-        animator.SetFloat("y",movement.y);
-        animator.SetFloat("Speed",movement.sqrMagnitude);
-        animator.SetBool("stop",false);
+            if(Vector2.Distance(transform.position,target.position)>=1.5){
+                speed = 4f;
+                movement = (target.transform.position-transform.position).normalized;
+                transform.position = Vector2.MoveTowards(transform.position,target.position,speed * Time.deltaTime);
+                animator.SetFloat("x",movement.x);
+                animator.SetFloat("y",movement.y);
+                animator.SetFloat("Speed",movement.sqrMagnitude);
+                animator.SetBool("stop",false);
         } 
-        if(Vector2.Distance(transform.position,target.position) <= 1){
-        animator.SetBool("stop",true);
-
-        }
+            if(Vector2.Distance(transform.position,target.position) <= 1){
+            animator.SetBool("stop",true);
+            }
         }
         
     }
@@ -55,11 +54,21 @@ public class Enemy1 : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bala1"))
-        {   vida -=1;
+        {   
+            vida -=1;
             if (vida<=0){
-            Destroy(gameObject);
-            GameObject death = Instantiate(bones,transform.position,Quaternion.identity);
-            Destroy(death,6f);
+                Destroy(gameObject);
+                GameObject death = Instantiate(bones,transform.position,Quaternion.identity);
+                Destroy(death,6f);
+            }
+        }
+        if (collision.CompareTag("Bala2"))
+        {
+            vida -=12;
+            if (vida<=0){
+                Destroy(gameObject);
+                GameObject death = Instantiate(bones,transform.position,Quaternion.identity);
+                Destroy(death,6f);
             }
         }
 

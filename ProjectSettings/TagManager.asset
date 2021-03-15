@@ -11,6 +11,8 @@ TagManager:
   - Life
   - Score
   - Spawn
+  - Arma2
+  - Bala2
   layers:
   - Default
   - TransparentFX
