@@ -57,6 +57,14 @@ public class Player : MonoBehaviour
             Vida.VidaCont = 100;
             restart.gameObject.SetActive(false);
          }
+
+         if(Vida.VidaCont <=0)
+            {
+                CancelInvoke("bajarVida");
+                vivo = false;
+                Vida.VidaCont = 0;
+                restart.gameObject.SetActive(true);
+            }
          
     }
  
@@ -102,20 +110,24 @@ public class Player : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision){
         if (collision.CompareTag("Enemy1")){
-            Vida.VidaCont -= 5;
-            Vector2 difference = transform.position - collision.transform.position;
-            transform.position = new Vector2(transform.position.x +Random.Range(0,2), transform.position.y + Random.Range(0,2));
-            if(Vida.VidaCont <=0)
-            {
-                vivo = false;
-                Vida.VidaCont = 0;
-                restart.gameObject.SetActive(true);
-            }
+            InvokeRepeating("bajarVida",0,0.7f);
+            //Vida.VidaCont -= 5;
+            //Vector2 difference = transform.position - collision.transform.position;
+            //transform.position = new Vector2(transform.position.x +Random.Range(0,2), transform.position.y + Random.Range(0,2));
+            
         }
         if (collision.CompareTag("Arma2")){
             arma2Active = true;
             arma1Active = false;
             Debug.Log("Recoje arma");
         }
+    }
+
+    void OnTriggerExit2D(Collider2D collider){
+        CancelInvoke("bajarVida");
+    }
+
+    void bajarVida(){
+        Vida.VidaCont -= 5;
     }
 }

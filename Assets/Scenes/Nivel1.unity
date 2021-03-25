@@ -5917,10 +5917,20 @@ PrefabInstance:
       propertyPath: vida
       value: 
       objectReference: {fileID: 77870138}
+    - target: {fileID: 8522571444593340611, guid: 5f7560153ad333d49ae1aa95218d40f9,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8522571444593340616, guid: 5f7560153ad333d49ae1aa95218d40f9,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522571444593340620, guid: 5f7560153ad333d49ae1aa95218d40f9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8522571444593340622, guid: 5f7560153ad333d49ae1aa95218d40f9,
         type: 3}
