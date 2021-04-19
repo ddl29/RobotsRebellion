@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public Vida vida;
     public float speed  = 5f;
     
     public Rigidbody2D rb;
@@ -51,19 +53,21 @@ public class Player : MonoBehaviour
             animator.SetFloat("Speed",movement.sqrMagnitude);
             Aim();
             Shoot();
+        }else{
+            SceneManager.LoadScene(3);
         }
-         if(Input.GetKeyDown(KeyCode.Space)){
+         /*if(Input.GetKeyDown(KeyCode.Space)){
             vivo = true;
-            Vida.VidaCont = 100;
+            vida.VidaCont = 100;
             restart.gameObject.SetActive(false);
-         }
+         }*/
 
-         if(Vida.VidaCont <=0)
+         if(vida.VidaCont <=0)
             {
                 CancelInvoke("bajarVida");
                 vivo = false;
-                Vida.VidaCont = 0;
-                restart.gameObject.SetActive(true);
+                vida.VidaCont = 0;
+                //restart.gameObject.SetActive(true);
             }
          
     }
@@ -128,6 +132,6 @@ public class Player : MonoBehaviour
     }
 
     void bajarVida(){
-        Vida.VidaCont -= 5;
+        vida.VidaCont -= 5;
     }
 }
