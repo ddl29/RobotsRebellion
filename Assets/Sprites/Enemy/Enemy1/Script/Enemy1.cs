@@ -32,7 +32,7 @@ public class Enemy1 : MonoBehaviour
     {
         if(active){
             if(Vector2.Distance(transform.position,target.position)>=1.5){
-                speed = 4f;
+                speed = 3.5f;
                 movement = (target.transform.position-transform.position).normalized;
                 transform.position = Vector2.MoveTowards(transform.position,target.position,speed * Time.deltaTime);
                 animator.SetFloat("x",movement.x);
@@ -40,7 +40,7 @@ public class Enemy1 : MonoBehaviour
                 animator.SetFloat("Speed",movement.sqrMagnitude);
                 animator.SetBool("stop",false);
         } 
-            if(Vector2.Distance(transform.position,target.position) <= 1){
+            if(Vector2.Distance(transform.position,target.position) <= 1.5f){
             animator.SetBool("stop",true);
             }
         }
