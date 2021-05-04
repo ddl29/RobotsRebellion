@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        crosshairdist = 2f;
+        crosshairdist = 1f;
         restart.gameObject.SetActive(false);
         vivo = true;
         arma2Active = false;
