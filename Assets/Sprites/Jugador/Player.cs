@@ -28,10 +28,8 @@ public class Player : MonoBehaviour
     bool arma2Active;
     int arma2Ammo;
     Vector2 damage;
-
-
-
-
+    IEnumerator disparoRutina;
+    public GameObject explosion;
 
     void Start()
     {
@@ -86,30 +84,34 @@ public class Player : MonoBehaviour
         }
     }
     void Shoot()
-    {
+    {  
         Vector2 shootdir = crosshair.transform.localPosition;
         shootdir.Normalize();
         if(arma2Active ==true){
-            if(Input.GetButtonUp("Fire1") ){
-                arma2Ammo -=1;
-                if(arma2Ammo >=0) {
-                     GameObject bullet2 = Instantiate(bullet2Prefab,new Vector2(transform.position.x + shootdir.x, transform.position.y+shootdir.y), Quaternion.identity);
-                     bullet2.GetComponent<Rigidbody2D>().velocity = shootdir * speed_bullet2;
-                     bullet2.transform.Rotate(0,0,Mathf.Atan2(shootdir.y,shootdir.x) * Mathf.Rad2Deg);
-                     Destroy(bullet2,2f);
+            if(arma2Ammo >0){
+                if(Input.GetButtonDown("Fire1")){
+                    disparoRutina = disparar(shootdir,bullet2Prefab, speed_bullet2, true);
+                    StartCoroutine(disparoRutina);
+                    arma2Ammo -=1;
                 }
-                if(arma2Ammo <= 0){
-                     arma1Active = true;
+                if(Input.GetButtonUp("Fire1")){
+                    StopCoroutine(disparoRutina);
                 }
+            }else{
+                arma2Active = false;
+                StopCoroutine(disparoRutina);
+                arma1Active = true;
             }
         }
         if(arma1Active == true){
-           if(Input.GetButtonUp("Fire1")){
-                GameObject bullet = Instantiate(bulletPrefab,new Vector2(transform.position.x + shootdir.x, transform.position.y+shootdir.y), Quaternion.identity);
-                bullet.GetComponent<Rigidbody2D>().velocity = shootdir * speed_bullet;
-                bullet.transform.Rotate(0,0,Mathf.Atan2(shootdir.y,shootdir.x) * Mathf.Rad2Deg);
-                Destroy(bullet,2f);
+            if(Input.GetButtonDown("Fire1")){
+                disparoRutina = disparar(shootdir,bulletPrefab, speed_bullet, false);
+                StartCoroutine(disparoRutina);
             }
+            if(Input.GetButtonUp("Fire1")){
+                StopCoroutine(disparoRutina);
+            }
+
         }
     }
     void OnTriggerEnter2D(Collider2D collision){
@@ -125,6 +127,13 @@ public class Player : MonoBehaviour
             arma1Active = false;
             Debug.Log("Recoje arma");
         }
+
+        if(collision.tag == "BalaEnemy2"){
+            Destroy(collision.gameObject);
+            bajarVida();
+            GameObject effect = Instantiate(explosion,collision.transform.position,Quaternion.identity);
+            Destroy(effect,.5f);
+        }
     }
 
     void OnTriggerExit2D(Collider2D collider){
@@ -134,4 +143,17 @@ public class Player : MonoBehaviour
     void bajarVida(){
         vida.VidaCont -= 5;
     }
+
+    IEnumerator disparar(Vector2 shootdir, GameObject bulletPrefab, float speed, bool secondArma){
+        while(true){
+            GameObject bullet = Instantiate(bulletPrefab,new Vector2(transform.position.x + shootdir.x, transform.position.y+shootdir.y), Quaternion.identity);
+            bullet.GetComponent<Rigidbody2D>().velocity = shootdir * speed;
+            bullet.transform.Rotate(0,0,Mathf.Atan2(shootdir.y,shootdir.x) * Mathf.Rad2Deg);
+            Destroy(bullet,2f);
+            if(secondArma)
+                arma2Ammo -=1;
+            yield  return new WaitForSeconds(0.5f);
+        }
+    }
+
 }

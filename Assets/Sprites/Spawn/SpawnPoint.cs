@@ -14,6 +14,7 @@ public class SpawnPoint : MonoBehaviour
 
     public float spawnLife;
     Player playerScript;
+    public GameObject portal;
 
     // Update is called once per frame
     void Update()
@@ -27,6 +28,7 @@ public class SpawnPoint : MonoBehaviour
         spawnDelay = 9;
         spawnLife = 30;
         InvokeRepeating("EnemySpawn",spawnTime,spawnDelay);
+        portal.SetActive(false);
       
     }
     public void EnemySpawn(){
@@ -47,7 +49,7 @@ public class SpawnPoint : MonoBehaviour
                  GameObject explosion = Instantiate(destroy,transform.position,Quaternion.identity);
                  Destroy(explosion,1.25f);
                  Destroy(gameObject);
-
+                 portal.SetActive(true);
                  stop = true;
             }
         }
@@ -58,7 +60,7 @@ public class SpawnPoint : MonoBehaviour
                 GameObject explosion = Instantiate(destroy,transform.position,Quaternion.identity);
                 Destroy(explosion,1.25f);
                 Destroy(gameObject);
-
+                portal.SetActive(true);
                 stop = true;
             }
           }

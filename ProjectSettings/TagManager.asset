@@ -13,6 +13,7 @@ TagManager:
   - Spawn
   - Arma2
   - Bala2
+  - BalaEnemy2
   layers:
   - Default
   - TransparentFX
