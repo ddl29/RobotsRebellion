@@ -15,6 +15,8 @@ public class SpawnPoint : MonoBehaviour
     public float spawnLife;
     Player playerScript;
     public GameObject portal;
+    public Animator portalSwitch;
+
 
     // Update is called once per frame
     void Update()
@@ -29,6 +31,7 @@ public class SpawnPoint : MonoBehaviour
         spawnLife = 30;
         InvokeRepeating("EnemySpawn",spawnTime,spawnDelay);
         portal.SetActive(false);
+         
       
     }
     public void EnemySpawn(){
@@ -51,6 +54,7 @@ public class SpawnPoint : MonoBehaviour
                  Destroy(gameObject);
                  portal.SetActive(true);
                  stop = true;
+                portalSwitch.SetBool("WinLv", true);
             }
         }
           if (collision.CompareTag("Bala2") ){
@@ -62,6 +66,7 @@ public class SpawnPoint : MonoBehaviour
                 Destroy(gameObject);
                 portal.SetActive(true);
                 stop = true;
+                portalSwitch.SetBool("WinLv", true);
             }
           }
     }
