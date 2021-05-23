@@ -14,6 +14,7 @@ TagManager:
   - Arma2
   - Bala2
   - BalaEnemy2
+  - Destruible
   layers:
   - Default
   - TransparentFX
