@@ -49,6 +49,7 @@ public class SpawnPoint : MonoBehaviour
             spawnLife -=1;
             if (spawnLife<=0){
                  Destroy(gameObject);
+                 ManagerSounScript.playSounds("explosionSpawn");
                  GameObject explosion = Instantiate(destroy,transform.position,Quaternion.identity);
                  Destroy(explosion,1.25f);
                  Destroy(gameObject);
@@ -61,6 +62,7 @@ public class SpawnPoint : MonoBehaviour
             spawnLife -= 12;
             if (spawnLife<=0){
                 Destroy(gameObject);
+                ManagerSounScript.playSounds("explosionSpawn");
                 GameObject explosion = Instantiate(destroy,transform.position,Quaternion.identity);
                 Destroy(explosion,1.25f);
                 Destroy(gameObject);

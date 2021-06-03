@@ -57,6 +57,7 @@ public class Enemy1 : MonoBehaviour
         {   
             vida -=1;
             if (vida<=0){
+                ManagerSounScript.playSounds("grunido");
                 Destroy(gameObject);
                 GameObject death = Instantiate(bones,transform.position,Quaternion.identity);
                 Destroy(death,6f);
@@ -66,11 +67,11 @@ public class Enemy1 : MonoBehaviour
         {
             vida -=12;
             if (vida<=0){
+                ManagerSounScript.playSounds("grunido");
                 Destroy(gameObject);
                 GameObject death = Instantiate(bones,transform.position,Quaternion.identity);
                 Destroy(death,6f);
             }
         }
-
     }
 }

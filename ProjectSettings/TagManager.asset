@@ -15,6 +15,11 @@ TagManager:
   - Bala2
   - BalaEnemy2
   - Destruible
+  - Acido
+  - BarrilAcido
+  - caja
+  - Vida
+  - tierra
   layers:
   - Default
   - TransparentFX

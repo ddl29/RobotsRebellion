@@ -24,7 +24,20 @@ public class Bullet : MonoBehaviour
         }
         if(collision.CompareTag("Piedra") || collision.CompareTag("Claca") || collision.CompareTag("Enemy1")|| collision.CompareTag("Spawn"))
         { 
-     
+            ManagerSounScript.playSounds("pared");
+            GameObject effect = Instantiate(explosion,transform.position,Quaternion.identity);
+            Destroy(effect,.5f);
+            Destroy(gameObject);
+
+        }
+        if(collision.CompareTag("BarrilAcido")){
+            ManagerSounScript.playSounds("pared");
+            GameObject effect = Instantiate(explosion,transform.position,Quaternion.identity);
+            Destroy(effect,.5f);
+            Destroy(gameObject);
+        }
+        if(collision.CompareTag("caja")){
+            ManagerSounScript.playSounds("pared");
             GameObject effect = Instantiate(explosion,transform.position,Quaternion.identity);
             Destroy(effect,.5f);
             Destroy(gameObject);
@@ -39,5 +52,6 @@ public class Bullet : MonoBehaviour
             Destroy(effect,.5f);
             Destroy(gameObject);
         }
+
     }
 }

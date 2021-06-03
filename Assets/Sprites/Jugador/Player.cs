@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
     IEnumerator disparoRutina;
     public GameObject explosion;
 
+    
+    
+
     void Start()
     {
         crosshairdist = 1f;
@@ -44,6 +47,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         if(vivo){
+            
             movement.x = Input.GetAxisRaw("Horizontal");
             movement.y = Input.GetAxisRaw("Vertical");
             animator.SetFloat("Horizontal",movement.x);
@@ -74,6 +78,7 @@ public class Player : MonoBehaviour
     {
         if(vivo){
         rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
+        
         }
     }
 
@@ -90,14 +95,17 @@ public class Player : MonoBehaviour
         if(arma2Active ==true){
             if(arma2Ammo >0){
                 if(Input.GetButtonDown("Fire1")){
+                    
                     disparoRutina = disparar(shootdir,bullet2Prefab, speed_bullet2, true);
                     StartCoroutine(disparoRutina);
                     arma2Ammo -=1;
                 }
                 if(Input.GetButtonUp("Fire1")){
+ 
                     StopCoroutine(disparoRutina);
                 }
             }else{
+
                 arma2Active = false;
                 StopCoroutine(disparoRutina);
                 arma1Active = true;
@@ -109,6 +117,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(disparoRutina);
             }
             if(Input.GetButtonUp("Fire1")){
+
                 StopCoroutine(disparoRutina);
             }
 
@@ -134,24 +143,60 @@ public class Player : MonoBehaviour
             GameObject effect = Instantiate(explosion,collision.transform.position,Quaternion.identity);
             Destroy(effect,.5f);
         }
+         if (collision.CompareTag("Acido")){
+             bajarVidaExplosion();
+         }
+        if (collision.CompareTag("Vida")){
+             aumentarVida();
+         }
+        if (collision.CompareTag("tierra")){
+            StartCoroutine(sonidoTierra());
+            
+         }
+        
+    }
+    void OnTriggerStay2D(Collider2D collision){
+        
+    }
+    IEnumerator sonidoTierra(){
+        if(movement.sqrMagnitude > 0)
+        ManagerSounScript.playSounds("tierra1");
+        print(movement.sqrMagnitude);
+        yield return new WaitForSeconds(1f);
     }
 
-    void OnTriggerExit2D(Collider2D collider){
+    void OnTriggerExit2D(Collider2D collision){
         CancelInvoke("bajarVida");
+        if (collision.CompareTag("tierra"))
+        {
+            StopCoroutine(sonidoTierra());
+        }
     }
 
     void bajarVida(){
         vida.VidaCont -= 5;
     }
+    void bajarVidaExplosion(){
+        vida.VidaCont -= 10;
+    }
+     void aumentarVida(){
+        vida.VidaCont += 15;
+    }
 
     IEnumerator disparar(Vector2 shootdir, GameObject bulletPrefab, float speed, bool secondArma){
         while(true){
+            
             GameObject bullet = Instantiate(bulletPrefab,new Vector2(transform.position.x + shootdir.x, transform.position.y+shootdir.y), Quaternion.identity);
             bullet.GetComponent<Rigidbody2D>().velocity = shootdir * speed;
             bullet.transform.Rotate(0,0,Mathf.Atan2(shootdir.y,shootdir.x) * Mathf.Rad2Deg);
             Destroy(bullet,2f);
-            if(secondArma)
-                arma2Ammo -=1;
+           if(!secondArma){
+            ManagerSounScript.playSounds("Bullet1");
+           }
+            if(secondArma){
+            arma2Ammo -=1;
+            ManagerSounScript.playSounds("Bullet2");
+            }
             yield  return new WaitForSeconds(0.5f);
         }
     }
