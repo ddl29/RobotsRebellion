@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     Vector2 damage;
     IEnumerator disparoRutina;
     public GameObject explosion;
+    private bool iniciosonidotierra = false,
+                  inicioSonidometal= false;
 
     
     
@@ -149,28 +151,73 @@ public class Player : MonoBehaviour
         if (collision.CompareTag("Vida")){
              aumentarVida();
          }
-        if (collision.CompareTag("tierra")){
-            StartCoroutine(sonidoTierra());
-            
-         }
         
     }
     void OnTriggerStay2D(Collider2D collision){
-        
+
+          if (collision.CompareTag("tierra")){
+             if(movement.sqrMagnitude > 0){   
+              ManagerSoudTierra.tierra = true;
+              if (!iniciosonidotierra)
+              {
+                ManagerSoudTierra.playSounds("tierra1");
+                iniciosonidotierra = true;
+                print(movement.sqrMagnitude);
+              }
+             
+              }
+
+            if(movement.sqrMagnitude == 0){
+                if (iniciosonidotierra)
+                {
+                iniciosonidotierra = false;
+                ManagerSoudTierra.tierra = false;
+                ManagerSoudTierra.playSounds("tierra1");
+                print(movement.sqrMagnitude);
+                }
+               
+            }  
+         } 
+          if (collision.CompareTag("metal")){
+             if(movement.sqrMagnitude > 0){   
+              ManagerSoudTierra.metal = true;
+              if (!inicioSonidometal)
+              {
+                ManagerSoudTierra.playSounds("Metal");
+                inicioSonidometal = true;
+                print(movement.sqrMagnitude);
+              }
+             
+              }
+
+            if(movement.sqrMagnitude == 0){
+                if (inicioSonidometal)
+                {
+                inicioSonidometal = false;
+                ManagerSoudTierra.metal = false;
+                ManagerSoudTierra.playSounds("Metal");
+                print(movement.sqrMagnitude);
+                }
+               
+            }  
+         } 
+           
     }
-    IEnumerator sonidoTierra(){
-        if(movement.sqrMagnitude > 0)
-        ManagerSounScript.playSounds("tierra1");
-        print(movement.sqrMagnitude);
-        yield return new WaitForSeconds(1f);
-    }
+
 
     void OnTriggerExit2D(Collider2D collision){
         CancelInvoke("bajarVida");
-        if (collision.CompareTag("tierra"))
-        {
-            StopCoroutine(sonidoTierra());
-        }
+
+        iniciosonidotierra = false;
+        ManagerSoudTierra.tierra = false;
+        ManagerSoudTierra.playSounds("tierra1");
+
+
+        inicioSonidometal = false;
+        ManagerSoudTierra.metal = false;
+        ManagerSoudTierra.playSounds("Metal");
+
+
     }
 
     void bajarVida(){

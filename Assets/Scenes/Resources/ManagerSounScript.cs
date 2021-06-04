@@ -6,8 +6,9 @@ public class ManagerSounScript : MonoBehaviour
 {
     public static AudioClip soundBullet, soundBullet2, soundBullet3,
                             explosionspawn,explosionpared, portalsound,
-                            soundgruñido,soundtierra;
+                            soundgruñido ;
     static AudioSource audioSource;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,7 @@ public class ManagerSounScript : MonoBehaviour
         explosionpared = Resources.Load<AudioClip>("pared");
         portalsound = Resources.Load<AudioClip>("Portal");
         soundgruñido = Resources.Load<AudioClip>("grunido");
-        soundtierra = Resources.Load<AudioClip>("tierra1");
+        
         audioSource = GetComponent<AudioSource>();
     }
      public static void playSounds(string clip){
@@ -41,11 +42,11 @@ public class ManagerSounScript : MonoBehaviour
             case "grunido":
             audioSource.PlayOneShot(soundgruñido);
             break;
-            case "tierra1":
-            audioSource.PlayOneShot(soundtierra);
-            break;
+           
+         
         }
     }
+
 
     // Update is called once per frame
     void Update()

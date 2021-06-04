@@ -20,6 +20,7 @@ TagManager:
   - caja
   - Vida
   - tierra
+  - metal
   layers:
   - Default
   - TransparentFX
