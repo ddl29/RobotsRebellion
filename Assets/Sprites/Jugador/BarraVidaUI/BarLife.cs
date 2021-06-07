@@ -6,11 +6,10 @@ using UnityEngine.UI;
 public class BarLife : MonoBehaviour
 {
    public Image barLife;
-   public Vida vida;
-   public int vidaMaxima;
+   private int vidaMaxima = 100;
     
     void Update()
     {
-        barLife.fillAmount = (float)vida.VidaCont/vidaMaxima;
+        barLife.fillAmount = (float)VIdaPlayer.vida/vidaMaxima;
     }
 }

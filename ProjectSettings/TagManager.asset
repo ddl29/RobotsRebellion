@@ -21,6 +21,7 @@ TagManager:
   - Vida
   - tierra
   - metal
+  - BarLife
   layers:
   - Default
   - TransparentFX

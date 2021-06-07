@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public Vida vida;
     public float speed  = 5f;
     
     public Rigidbody2D rb;
@@ -33,17 +32,18 @@ public class Player : MonoBehaviour
     private bool iniciosonidotierra = false,
                   inicioSonidometal= false;
 
-    
+    private bool once;
     
 
     void Start()
-    {
+    {   
         crosshairdist = 1f;
         restart.gameObject.SetActive(false);
         vivo = true;
         arma2Active = false;
         arma1Active = true;
         arma2Ammo =20;
+        once = true;
     }
 
     void Update()
@@ -66,11 +66,11 @@ public class Player : MonoBehaviour
             restart.gameObject.SetActive(false);
          }*/
 
-         if(vida.VidaCont <=0)
+         if(VIdaPlayer.vida <=0)
             {
                 CancelInvoke("bajarVida");
                 vivo = false;
-                vida.VidaCont = 0;
+                VIdaPlayer.vida = 0;
                 //restart.gameObject.SetActive(true);
             }
          
@@ -92,34 +92,36 @@ public class Player : MonoBehaviour
     }
     void Shoot()
     {  
-        Vector2 shootdir = crosshair.transform.localPosition;
-        shootdir.Normalize();
         if(arma2Active ==true){
             if(arma2Ammo >0){
-                if(Input.GetButtonDown("Fire1")){
+                if(Input.GetButtonDown("Fire1") && once){
                     
-                    disparoRutina = disparar(shootdir,bullet2Prefab, speed_bullet2, true);
+                    once = false;
+                    disparoRutina = disparar(bullet2Prefab, speed_bullet2, true);
                     StartCoroutine(disparoRutina);
                     arma2Ammo -=1;
                 }
                 if(Input.GetButtonUp("Fire1")){
  
                     StopCoroutine(disparoRutina);
+                    once = true;
                 }
             }else{
 
                 arma2Active = false;
                 StopCoroutine(disparoRutina);
                 arma1Active = true;
+                once = true;
             }
         }
         if(arma1Active == true){
-            if(Input.GetButtonDown("Fire1")){
-                disparoRutina = disparar(shootdir,bulletPrefab, speed_bullet, false);
+            if(Input.GetButtonDown("Fire1") && once){
+                once = false;
+                disparoRutina = disparar(bulletPrefab, speed_bullet, false);
                 StartCoroutine(disparoRutina);
             }
             if(Input.GetButtonUp("Fire1")){
-
+                once = true;
                 StopCoroutine(disparoRutina);
             }
 
@@ -162,7 +164,7 @@ public class Player : MonoBehaviour
               {
                 ManagerSoudTierra.playSounds("tierra1");
                 iniciosonidotierra = true;
-                print(movement.sqrMagnitude);
+                //print(movement.sqrMagnitude);
               }
              
               }
@@ -173,7 +175,7 @@ public class Player : MonoBehaviour
                 iniciosonidotierra = false;
                 ManagerSoudTierra.tierra = false;
                 ManagerSoudTierra.playSounds("tierra1");
-                print(movement.sqrMagnitude);
+                //print(movement.sqrMagnitude);
                 }
                
             }  
@@ -185,7 +187,7 @@ public class Player : MonoBehaviour
               {
                 ManagerSoudTierra.playSounds("Metal");
                 inicioSonidometal = true;
-                print(movement.sqrMagnitude);
+                //print(movement.sqrMagnitude);
               }
              
               }
@@ -196,7 +198,7 @@ public class Player : MonoBehaviour
                 inicioSonidometal = false;
                 ManagerSoudTierra.metal = false;
                 ManagerSoudTierra.playSounds("Metal");
-                print(movement.sqrMagnitude);
+                //print(movement.sqrMagnitude);
                 }
                
             }  
@@ -221,18 +223,19 @@ public class Player : MonoBehaviour
     }
 
     void bajarVida(){
-        vida.VidaCont -= 5;
+        VIdaPlayer.vida -= 5;
     }
     void bajarVidaExplosion(){
-        vida.VidaCont -= 10;
+        VIdaPlayer.vida -= 10;
     }
      void aumentarVida(){
-        vida.VidaCont += 15;
+        VIdaPlayer.vida += 15;
     }
 
-    IEnumerator disparar(Vector2 shootdir, GameObject bulletPrefab, float speed, bool secondArma){
+    IEnumerator disparar(GameObject bulletPrefab, float speed, bool secondArma){
         while(true){
-            
+            Vector2 shootdir = crosshair.transform.localPosition;
+            shootdir.Normalize();
             GameObject bullet = Instantiate(bulletPrefab,new Vector2(transform.position.x + shootdir.x, transform.position.y+shootdir.y), Quaternion.identity);
             bullet.GetComponent<Rigidbody2D>().velocity = shootdir * speed;
             bullet.transform.Rotate(0,0,Mathf.Atan2(shootdir.y,shootdir.x) * Mathf.Rad2Deg);
